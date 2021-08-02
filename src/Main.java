@@ -21,11 +21,14 @@ public class Main {
         int addCourse = 1, addStudent = 2, registerStudent = 3, displayStudent = 4, exit = 5;
 
         // main
-        System.out.println(welcomeSign + "\n" + menu);
-        while ( keyboard.nextInt() != exit) {
-
+        System.out.println(welcomeSign);
+        int selection = -1;
+        while ( selection != exit) {
+            System.out.print(menu + "\nYour selection: ");
+            selection = keyboard.nextInt();
         }
         System.out.println("Thank you for using the university Registration System");
+
 
     }
 
