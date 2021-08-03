@@ -44,8 +44,8 @@ public class Course {
         if ( ! (o instanceof Course) )
             return false;
         Course courseObj = (Course) o;
-        return courseObj.id == id & courseObj.courseName.equalsIgnoreCase(courseName) &
-                courseObj.departmentName.equalsIgnoreCase(departmentName);
+        return courseObj.id == this.id & courseObj.courseName.equalsIgnoreCase(this.courseName) &
+                courseObj.departmentName.equalsIgnoreCase(this.departmentName);
     }
 
 }
