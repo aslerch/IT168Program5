@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -46,8 +47,14 @@ public class Main {
                 if (numStudents != 20)
                     addStudent();
             }
+
+            // user selects to register a student
+            if (selection == registerStudent)
+                registerStudent();
+
         }
         System.out.println("Thank you for using the university Registration System");
+        System.out.println(Arrays.toString(students[0].getCourses()));
 
 
     }
@@ -90,7 +97,7 @@ public class Main {
     }
 
     private static void addStudent() {
-        int id = askForStudentId();
+        int id = askForStudentIdToAdd();
         String firstName = askForFirstName();
         String lastName = askForLastName();
         Student newStudent = new Student(id, firstName, lastName);
@@ -99,7 +106,7 @@ public class Main {
         System.out.println("student was added successfully\n" + stars);
     }
 
-    private static int askForStudentId() {
+    private static int askForStudentIdToAdd() {
         int id;
         boolean flag;
         do {
@@ -124,6 +131,88 @@ public class Main {
     private static String askForLastName() {
         System.out.print("please enter the student's last name: ");
         return keyboard.next();
+    }
+
+    private static void registerStudent() {
+        if (numCoursesOffered == 0)
+            System.out.println("There are no courses in the system\n" + stars);
+        if (numStudents == 0)
+            System.out.println("There are no students in the system\n" + stars);
+        if (numStudents > 0 & numCoursesOffered > 0) {
+            int studentId = askForStudentIdToRegister();
+            if (checkIfStudentExists(studentId) == false)
+                System.out.println("The student does not exist");
+            if (checkIfStudentExists(studentId) == true) {
+                System.out.print("please enter the course id: ");
+                int courseId = keyboard.nextInt();
+                if (isAlreadyEnrolledInCourse(studentId, courseId))
+                    System.out.print("student is already registered for this course\n" + stars);
+                if (isAlreadyEnrolledInCourse(studentId, courseId) == false) {
+                    enrollStudentInCourse(studentId, courseId);
+                    System.out.println("student has been registered for the course successfully\n" + stars);
+                }
+            }
+        }
+    }
+
+    private static boolean checkIfStudentExists(int id) {
+        boolean studentExists = false;
+        for (int i = 0; i < numStudents; i++) {
+            if (students[i].getId() == id)
+                studentExists = true;
+        }
+        return studentExists;
+    }
+
+    private static boolean isAlreadyEnrolledInCourse(int studentId, int courseId) {
+        boolean alreadyEnrolled = false;
+        for (int i = 0; i < numCoursesOffered; i++) {
+            for (int j = 0; j < students[indexOfStudent(studentId)].getCourses().length; j++) {
+                if (coursesOffered[i] == students[indexOfStudent(studentId)].getCourses()[j])
+                    alreadyEnrolled = true;
+            }
+        }
+        return alreadyEnrolled;
+    }
+
+    private static int indexOfStudent(int studentId) {
+        int id = -1;
+        for (int i = 0; i < numStudents; i++) {
+            if (students[i].getId() == studentId)
+                id =  i;
+        }
+        return id;
+    }
+
+    private static int indexOfCourse(int courseId) {
+        int id = -1;
+        for (int i = 0; i <numCoursesOffered; i++) {
+            if (coursesOffered[i].getId() == courseId)
+                id = i;
+        }
+        return id;
+    }
+
+    private static void enrollStudentInCourse(int studentId, int courseId) {
+        students[indexOfStudent(studentId)].getCourses()[students[indexOfStudent(studentId)].getNumEnrolledCourses()] = coursesOffered[indexOfCourse(courseId)];
+        students[indexOfStudent(studentId)].setNumEnrolledCourses(students[indexOfStudent(studentId)].getNumEnrolledCourses() + 1);
+    }
+
+    private static int askForStudentIdToRegister() {
+        int id;
+        boolean flag;
+        do {
+            flag = false;
+            System.out.print("please enter the student's id: ");
+            id = keyboard.nextInt();
+            for (int i = 0; i < numStudents; i++) {
+                if (students[i].getId() == id) {
+                    flag = true;
+                    System.out.println("there is no student with this id number");
+                }
+            }
+        } while (flag == false);
+        return id;
     }
 
 
