@@ -38,6 +38,14 @@ public class Main {
                 if (numCoursesOffered != 4)
                     addCourse();
             }
+
+            // user selects to add a student
+            if (selection == addStudent) {
+                if (numStudents == 20)
+                    System.out.println("all students slots have been taken. unable to add another student\n" + stars);
+                if (numStudents != 20)
+                    addStudent();
+            }
         }
         System.out.println("Thank you for using the university Registration System");
 
@@ -56,18 +64,18 @@ public class Main {
 
     private static int askForCourseId() {
         int id;
-            boolean flag;
-            do {
-                flag = false;
-                System.out.print("please enter the course id: ");
-                id = keyboard.nextInt();
-                for (int i = 0; i < numCoursesOffered; i++) {
-                    if (coursesOffered[i].getId() == id) {
-                        System.out.println("the course id is already in use");
-                        flag = true;
-                    }
+        boolean flag;
+        do {
+            flag = false;
+            System.out.print("please enter the course id: ");
+            id = keyboard.nextInt();
+            for (int i = 0; i < numCoursesOffered; i++) {
+                if (coursesOffered[i].getId() == id) {
+                    System.out.println("the course id is already in use");
+                    flag = true;
                 }
-            } while (flag);
+            }
+        } while (flag);
         return id;
     }
 
@@ -78,6 +86,43 @@ public class Main {
 
     private static String askForDepartmentName() {
         System.out.print("please enter the department name: ");
+        return keyboard.next();
+    }
+
+    private static void addStudent() {
+        int id = askForStudentId();
+        String firstName = askForFirstName();
+        String lastName = askForLastName();
+        Student newStudent = new Student(id, firstName, lastName);
+        students[numStudents] = newStudent;
+        numStudents++;
+        System.out.println("student was added successfully\n" + stars);
+    }
+
+    private static int askForStudentId() {
+        int id;
+        boolean flag;
+        do {
+            flag = false;
+            System.out.print("please enter the student's id: ");
+            id = keyboard.nextInt();
+            for (int i = 0; i < numStudents; i++) {
+                if (students[i].getId() == id) {
+                    System.out.println("this student id is already in use");
+                    flag = true;
+                }
+            }
+        } while (flag);
+        return id;
+    }
+
+    private static String askForFirstName() {
+        System.out.print("please enter the student's first name: ");
+        return keyboard.next();
+    }
+
+    private static String askForLastName() {
+        System.out.print("please enter the student's last name: ");
         return keyboard.next();
     }
 
