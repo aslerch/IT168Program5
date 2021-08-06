@@ -92,12 +92,13 @@ public class Main {
 
     private static String askForCourseName() {
         System.out.print("please enter the course name: ");
-        return keyboard.next();
+        keyboard.nextLine(); //input stream reasons
+        return keyboard.nextLine();
     }
 
     private static String askForDepartmentName() {
         System.out.print("please enter the department name: ");
-        return keyboard.next();
+        return keyboard.nextLine();
     }
 
     private static void addStudent() {
@@ -129,12 +130,13 @@ public class Main {
 
     private static String askForFirstName() {
         System.out.print("please enter the student's first name: ");
-        return keyboard.next();
+        keyboard.nextLine(); // input stream reasons
+        return keyboard.nextLine();
     }
 
     private static String askForLastName() {
         System.out.print("please enter the student's last name: ");
-        return keyboard.next();
+        return keyboard.nextLine();
     }
 
     private static void registerStudent() {
