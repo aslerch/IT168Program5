@@ -69,13 +69,22 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gpa=" + gpa +
-                ", courses=" + Arrays.toString(courses) +
-                '}';
+        String output =  "id: " + id +
+                "\nname: " + firstName + " " + lastName +
+                "\ncourses=\n";
+        if ( numEnrolledCourses == 0 )
+            output += "this student is not enrolled in any classes";
+        if (numEnrolledCourses > 0) {
+            for (int i  = 0; i < numEnrolledCourses; i++) {
+                output += "course id: " + courses[i].getId() +
+                        "\ndepartment: " + courses[i].getDepartmentName() +
+                        "\ncourse name: " + courses[i].getCourseName();
+                if (i != numEnrolledCourses)
+                    output += "\n\n";
+            }
+            output += "*********************************************";
+        }
+        return output;
     }
 
     @Override

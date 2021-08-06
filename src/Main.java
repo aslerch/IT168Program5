@@ -52,6 +52,10 @@ public class Main {
             if (selection == registerStudent)
                 registerStudent();
 
+            // user selects to display a student
+            if (selection == displayStudent)
+                displayStudent();
+
         }
         System.out.println("Thank you for using the university Registration System");
         System.out.println(Arrays.toString(students[0].getCourses()));
@@ -146,7 +150,7 @@ public class Main {
                 System.out.print("please enter the course id: ");
                 int courseId = keyboard.nextInt();
                 if (isAlreadyEnrolledInCourse(studentId, courseId))
-                    System.out.print("student is already registered for this course\n" + stars);
+                    System.out.println("student is already registered for this course\n" + stars);
                 if (isAlreadyEnrolledInCourse(studentId, courseId) == false) {
                     enrollStudentInCourse(studentId, courseId);
                     System.out.println("student has been registered for the course successfully\n" + stars);
@@ -167,15 +171,15 @@ public class Main {
     private static boolean isAlreadyEnrolledInCourse(int studentId, int courseId) {
         boolean alreadyEnrolled = false;
         for (int i = 0; i < numCoursesOffered; i++) {
-            for (int j = 0; j < students[indexOfStudent(studentId)].getCourses().length; j++) {
-                if (coursesOffered[i] == students[indexOfStudent(studentId)].getCourses()[j])
+            for (int j = 0; j < students[findIndexOfStudent(studentId)].getNumEnrolledCourses(); j++) {
+                if (coursesOffered[findIndexOfCourse(courseId)] == students[findIndexOfStudent(studentId)].getCourses()[j])
                     alreadyEnrolled = true;
             }
         }
         return alreadyEnrolled;
     }
 
-    private static int indexOfStudent(int studentId) {
+    private static int findIndexOfStudent(int studentId) {
         int id = -1;
         for (int i = 0; i < numStudents; i++) {
             if (students[i].getId() == studentId)
@@ -184,7 +188,7 @@ public class Main {
         return id;
     }
 
-    private static int indexOfCourse(int courseId) {
+    private static int findIndexOfCourse(int courseId) {
         int id = -1;
         for (int i = 0; i <numCoursesOffered; i++) {
             if (coursesOffered[i].getId() == courseId)
@@ -194,8 +198,8 @@ public class Main {
     }
 
     private static void enrollStudentInCourse(int studentId, int courseId) {
-        students[indexOfStudent(studentId)].getCourses()[students[indexOfStudent(studentId)].getNumEnrolledCourses()] = coursesOffered[indexOfCourse(courseId)];
-        students[indexOfStudent(studentId)].setNumEnrolledCourses(students[indexOfStudent(studentId)].getNumEnrolledCourses() + 1);
+        students[findIndexOfStudent(studentId)].getCourses()[students[findIndexOfStudent(studentId)].getNumEnrolledCourses()] = coursesOffered[findIndexOfCourse(courseId)];
+        students[findIndexOfStudent(studentId)].setNumEnrolledCourses(students[findIndexOfStudent(studentId)].getNumEnrolledCourses() + 1);
     }
 
     private static int askForStudentIdToRegister() {
@@ -208,11 +212,18 @@ public class Main {
             for (int i = 0; i < numStudents; i++) {
                 if (students[i].getId() == id) {
                     flag = true;
-                    System.out.println("there is no student with this id number");
                 }
+                if (flag == false)
+                System.out.println("there is no student with this id number");
             }
         } while (flag == false);
         return id;
+    }
+
+    private static void displayStudent() {
+        int studentId = askForStudentIdToRegister();
+        int index = findIndexOfStudent(studentId);
+        System.out.println(students[index].toString());
     }
 
 
